@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-import fastentrypoints
 from pip.req import parse_requirements
 from pip.download import PipSession
 
