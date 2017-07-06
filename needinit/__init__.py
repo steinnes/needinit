@@ -26,14 +26,14 @@ class NeedsInitMixin(object):
             self.api_client = ApiClient(self.config.credentials)
             self.initialize()
     """
-    def initialize(self, ):
+    def initialize(self):
         for name, method in self._originals.iteritems():
             setattr(self, name, method)
 
     def require_init(self, exempt=None):
         if exempt is None:
             exempt = []
-        exempt += ['__init__', 'initialize']
+        exempt += ['__init__', 'initialize', 'require_init']
 
         self._originals = {}
         for attr in dir(self):
