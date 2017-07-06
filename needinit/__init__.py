@@ -19,23 +19,23 @@ class NeedsInitMixin(object):
 
     class MyAppExtension(NeedsInitMixin, object):
         def __init__(self):
-            self.init_required(init_func='init_app', exceptions='status')
+            self.init_required(init_func='init_app', exempt='status')
 
         def init_app(self, app):
             self.config = app.config
             self.api_client = ApiClient(self.config.credentials)
             self.initialize()
     """
-    def initialize(self):
+    def initialize(self, ):
         for name, method in self._originals.iteritems():
             setattr(self, name, method)
 
-    def require_init(self, init_func, exceptions=None):
-        self._originals = {}
-        exempt = ['__init__', 'initialize', init_func]
-        if exceptions is not None:
-            exempt += exceptions
+    def require_init(self, exempt=None):
+        if exempt is None:
+            exempt = []
+        exempt += ['__init__', 'initialize']
 
+        self._originals = {}
         for attr in dir(self):
             if not inspect.ismethod(getattr(self, attr)):
                 continue
@@ -47,5 +47,5 @@ class NeedsInitMixin(object):
 
 
 class NeedsInit(NeedsInitMixin):
-    def __init__(self, init_func, exceptions=None):
-        self.require_init(init_func=init_func, exceptions=exceptions)
+    def __init__(self, init_func, exempt=None):
+        self.require_init(exempt=exempt)
