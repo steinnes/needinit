@@ -1,13 +1,17 @@
+import os
 from setuptools import setup, find_packages
 from pip.req import parse_requirements
 from pip.download import PipSession
 
 
 def get_requirements():
-    requirements = parse_requirements(
-        os.path.join(os.path.dirname(__file__), "requirements.txt"),
-        session=PipSession())
-    return [str(req.req) for req in requirements]
+    req_file = os.path.join(os.path.dirname(__file__), "requirements.txt")
+    if os.path.exists(req_file):
+        requirements = parse_requirements(
+            os.path.join(os.path.dirname(__file__), "requirements.txt"),
+            session=PipSession())
+        return [str(req.req) for req in requirements]
+    return []
 
 
 def get_version():
