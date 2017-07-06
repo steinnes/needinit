@@ -28,6 +28,6 @@ setup(
     author='Steinn Eldjarn Sigurdarson',
     author_email='steinnes@gmail.com',
     keywords=['library', 'object initialization'],
-    install_requires=[str(req.req) for req in parse_requirements("requirements.txt", session=PipSession())],
+    install_requires=get_requirements(),
     packages=find_packages(),
 )

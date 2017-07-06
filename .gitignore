@@ -1,4 +1,7 @@
-venv/
-.cache
+*.egg-info
 *.pyc
 *.sw?
+.cache
+build/
+dist/
+venv/
