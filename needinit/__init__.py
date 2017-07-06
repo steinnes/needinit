@@ -47,5 +47,7 @@ class NeedsInitMixin(object):
 
 
 class NeedsInit(NeedsInitMixin):
-    def __init__(self, init_func, exempt=None):
+    def __init__(self, *args, **kwargs):
+        exempt =  kwargs.pop('exempt') if 'exempt' in kwargs else None
+        super(NeedsInit, self).__init__(*args, **kwargs)
         self.require_init(exempt=exempt)
