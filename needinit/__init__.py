@@ -1,5 +1,7 @@
 import inspect
 
+from six import iteritems
+
 
 class NotInitialized(TypeError):
     pass
@@ -27,7 +29,7 @@ class NeedsInitMixin(object):
             self.initialize()
     """
     def initialize(self):
-        for name, method in self._originals.iteritems():
+        for name, method in iteritems(self._originals):
             setattr(self, name, method)
 
     def require_init(self, exempt=None):
