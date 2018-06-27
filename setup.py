@@ -1,14 +1,14 @@
 import os
 from setuptools import setup, find_packages
 
-try: # for pip >= 10
+try:  # for pip >= 10
     from pip._internal.req import parse_requirements
-except ImportError: # for pip <= 9.0.3
+except ImportError:  # for pip <= 9.0.3
     from pip.req import parse_requirements
 
-try: # for pip >= 10
+try:  # for pip >= 10
     from pip._internal.download import PipSession
-except ImportError: # for pip <= 9.0.3
+except ImportError:  # for pip <= 9.0.3
     from pip.download import PipSession
 
 
@@ -25,8 +25,11 @@ def get_requirements():
 def get_version():
     __version__ = None
     with open('needinit/_version.py') as version_src:
-        exec(version_src.read())
+        namespace = {}
+        exec(version_src.read(), namespace)
+        __version__ = namespace.get('__version__')
     return __version__
+
 
 setup(
     name='needinit',
